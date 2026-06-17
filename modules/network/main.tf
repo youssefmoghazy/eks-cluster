@@ -22,9 +22,7 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "public-${count.index + 1}"
-    "kubernetes.io/role/internal-elb"                     = "1"
-    "kubernetes.io/cluster/public-${count.index + 1}"     = "owned"
+  Name = "public-${count.index + 1}"
   }
 }
 
@@ -36,9 +34,9 @@ resource "aws_subnet" "private_subnets"{
   map_public_ip_on_launch = false
 
   tags = {
-    Name                                                  = "public-${count.index + 1}"
-    "kubernetes.io/role/internal-elb"                     = "1"
-    "kubernetes.io/cluster/public-${count.index + 1}"     = "owned"
+  Name                                                  = "public-${count.index + 1}"
+  "kubernetes.io/role/internal-elb"                     = "1"
+  "kubernetes.io/cluster/public-${count.index + 1}"     = "owned"
   }
 }
 
@@ -88,7 +86,7 @@ resource "aws_route_table" "public_rt" {
 resource "aws_route" "public_route" {
   route_table_id         = aws_route_table.public_rt.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_internet_gateway.igw.id
+  gateway_id             = aws_internet_gateway.igw.id
 }
 
 resource "aws_route_table_association" "public_assoc" {
