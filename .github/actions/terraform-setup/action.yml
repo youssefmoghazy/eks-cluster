@@ -1,0 +1,23 @@
+name: "Terraform Setup"
+description: "Checkout repo + configure AWS + setup Terraform"
+
+inputs:
+  aws-region:
+    required: true
+  role-to-assume:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.aws-region }}
+        role-to-assume: ${{ inputs.role-to-assume }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
