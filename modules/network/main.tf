@@ -22,7 +22,8 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true
 
   tags = {
-  Name = "public-${count.index + 1}"
+    Name                      = "public-${count.index + 1}"
+    "kubernetes.io/role/elb"  = "1"
   }
 }
 
@@ -30,7 +31,7 @@ resource "aws_subnet" "private_subnets"{
   count                   = length(var.private_subnet_cidrs)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.private_subnet_cidrs[count.index]
-  availability_zone      = var.availability_zones[count.index]
+  availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = false
 
   tags = {
