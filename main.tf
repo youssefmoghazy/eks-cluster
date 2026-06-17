@@ -9,7 +9,7 @@ module "network" {
 
 module "eks" {
   source              = "./modules/eks/"
-  private_subnet_ids = module.network.private_subnets
-  public_subnet_ids  = module.network.public_subnets
+  private_subnet_ids = module.network.private_subnet_ids
+  public_subnet_ids  = module.network.public_subnet_ids
 
 }
